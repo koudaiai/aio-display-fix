@@ -14,7 +14,14 @@ jobs:
           distribution: temurin
           java-version: '17'
 
+      # 新版 SDK 已移除 "tools" 包，默认安装会失败，显式指定要的包
       - uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+          log-accepted-android-sdk-licenses: false
+
+      - name: Install SDK platform and build tools
+        run: sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
       - uses: gradle/actions/setup-gradle@v4
         with:
